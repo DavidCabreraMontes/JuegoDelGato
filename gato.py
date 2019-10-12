@@ -77,14 +77,18 @@ def contrarGane(ficha): #Encontrar futuro gane
             return True
    
     if(np.count_nonzero(tablero[np.diag_indices(3)] == ficha)==2):#Diagonal \
-        print("D: ",tablero[np.diag_indices(3)])
-        print("Diagonal ",np.where(tablero[np.diag_indices(3)])) 
-        tablero[np.diag_indices(3)][np.where(tablero[np.diag_indices(3)]==" ")] = "R"
-        print(tablero[np.diag_indices(3)][np.where(tablero[np.diag_indices(3)]==" ")])
-    
-    #Aun no
+        posicionAuxiliar=[np.where(tablero[np.diag_indices(3)]==" ")][0] #Como es diagonal siempre sera la misma posicion en X e Y
+        #print(posicionAuxiliar)
+        posicionAuxiliar=posicionAuxiliar[0][0]#El valor aun esta en una tupla para eso el [0]
+        tablero[posicionAuxiliar,posicionAuxiliar] = "X"
+        colocar(posicionAuxiliar,posicionAuxiliar)
+
     if(np.count_nonzero(np.diag(np.fliplr(tablero)) == ficha)==2):#Diagonal /
-        np.diag(np.fliplr(tablero))[np.where(tablero[:,i]==" ")] = "R"
+        posicionAuxiliar=[np.where(np.diag(np.fliplr(tablero))==" ")][0]
+        #print(posicionAuxiliar)
+        posicionAuxiliar=posicionAuxiliar[0][0]#El valor aun esta en una tupla para eso el [0]
+        tablero[posicionAuxiliar,(2-posicionAuxiliar)] = "X"
+        colocar(posicionAuxiliar,(2-posicionAuxiliar))
 
     return False
     
@@ -120,7 +124,7 @@ def startGame():
             turnoJ=False
             if(not turnoJ):
                 turnoJ=segundaRegla()
-            turnoJ=False
+                imprimirTablero()
             if(not turnoJ):
                 terceraRegla()
             turnoJ=True
@@ -130,7 +134,7 @@ def startGame():
                 quintaRegla()
             if(not turnoJ):
                 sextaRegla()
-            imprimirTablero()
+            #imprimirTablero()
             juego=False #Va hacer remplazado por la funcion endgame
 
 #------------- Start Game --------------------
